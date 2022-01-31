@@ -16,7 +16,6 @@ app.get('/', (req, res) => {
   res.render('contactus');
 });
 
-//Routes
 app.use('/api/v1', inquiryRouter);
 
 //App started

@@ -22,9 +22,9 @@ newInquiry = (req, res) => {
   //Send email notification to user.
   const mailData = {
     from: "vinay.kaithwas@creolestudios.com",
-    to: email,
+    to: [email],
     subject: "Inquiry received",
-    html: `<b>We have received your request with following detail<br><p>Email: ${email}</p><p>Subject: ${subject}</p><p>Type: ${type}</p>Description: ${description}</b>`,
+    html: `<p>We have received your request with following detail<br><p>Email: ${email}</p><p>Subject: ${subject}</p><p>Type: ${type}</p>Description: ${description}</p>`,
     attachments: [
       {
         filename: "text note.txt",
@@ -37,13 +37,12 @@ newInquiry = (req, res) => {
     if (err) {
       res.status(500).send("Something went wrong.");
     } else {
-      req.flash('success', 'This is a flash message using the express-flash module.');
-      // res
-      //   .status(200)
-      //   .send({
-      //     message: "Email successfully sent to recipient!",
-      //     messageId: info.messageId,
-      //   });
+      res
+        .status(200)
+        .send({
+          message: "Email successfully sent to recipient!",
+          messageId: info.messageId,
+        });
     }
   });
 };
