@@ -11,12 +11,14 @@ require('dotenv').config();
 app.use(cors())
 app.use(express.json());
 const inquiryRouter = require('./routes/inquiryRoutes');
+const userRouter = require('./routes/userRoutes');
 
 app.get('/', (req, res) => {
   res.render('contactus');
 });
 
 app.use('/api/v1', inquiryRouter);
+app.use('/api/v1/users', userRouter);
 
 //App started
 app.listen(port || 3000, function () {

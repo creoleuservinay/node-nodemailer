@@ -1,19 +1,19 @@
 const nodemailer = require("nodemailer");
 const Enquiry = require("../models/inquiryModel");
 
-const transporter = nodemailer.createTransport({
+var transporter = nodemailer.createTransport({
   host: "smtp.mailtrap.io",
   port: 2525,
   auth: {
-    user: "57c3db20b38720",
-    pass: "9bb70f80e470e9",
-  },
+    user: "2640a48852d84b",
+    pass: "5d9a27e27a46a8"
+  }
 });
 
-newInquiry = (req, res) => {
+newInquiry = async (req, res) => {
   //Store enquiry into database.
   const { email, subject, description, type } = req.body;
-  const createNewenquiry = Enquiry.create({
+  const createNewenquiry = await Enquiry.create({
     email: email,
     type: type,
     subject: subject,
@@ -35,13 +35,14 @@ newInquiry = (req, res) => {
 
   transporter.sendMail(mailData, function (err, info) {
     if (err) {
-      res.status(500).send("Something went wrong.");
+      res.status(500).send(err);
     } else {
       res
         .status(200)
         .send({
           message: "Email successfully sent to recipient!",
           messageId: info.messageId,
+          data:createNewenquiry
         });
     }
   });
